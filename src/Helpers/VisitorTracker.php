@@ -19,6 +19,21 @@ class VisitorTracker
         $utmCampaign = Request::query('utm_campaign');
         $location = Location::get($ip);
         $sessionId = Session::getId();
+        $gclid   = Request::query('gclid');
+        $msclkid = Request::query('msclkid');
+        $fbclid  = Request::query('fbclid');
+
+        if ($gclid) {
+            Session::put('gclid', $gclid);
+        }
+
+        if ($msclkid) {
+            Session::put('msclkid', $msclkid);
+        }
+
+        if ($fbclid) {
+            Session::put('fbclid', $fbclid);
+        }
 
         Visitor::create([
             'session_id'    => $sessionId,
@@ -29,6 +44,9 @@ class VisitorTracker
             'utm_campaign'  => $utmCampaign,
             'country'       => $location?->countryName ?? 'Onbekend',
             'city'          => $location?->cityName ?? 'Onbekend',
+            'gclid'         => $gclid,
+            'msclkid'       => $msclkid,
+            'fbclid'        => $fbclid,
         ]);
 
         Session::put('visitor_tracked', true);

@@ -1,5 +1,6 @@
 {
   "name": "pm/visitor-tracker",
+  "version": "1.0.0",
   "description": "Track visitors and traffic sources in Laravel.",
   "type": "library",
   "autoload": {
