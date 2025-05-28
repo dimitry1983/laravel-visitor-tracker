@@ -5,11 +5,19 @@ use Pm\VisitorTracker\Models\Visitor;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Str;
 
 class VisitorTracker
 {
     public static function track(): void
     {
+
+        $bot = 0;
+        $userAgent = request()->header('User-Agent');
+        if (Str::contains(strtolower($userAgent), ['bot', 'crawler', 'spider', 'monitor'])) {
+            $bot = 1;
+        }
+
         if (Session::has('visitor_tracked')) return;
 
         $ip = Request::ip();
@@ -35,9 +43,14 @@ class VisitorTracker
             Session::put('fbclid', $fbclid);
         }
 
+
+
+
         Visitor::create([
             'session_id'    => $sessionId,
             'ip_address'    => $ip,
+            'user_agent'    => $userAgent,
+            'is_bot'        => $bot,
             'referrer'      => $referrer,
             'utm_source'    => $utmSource,
             'utm_medium'    => $utmMedium,
