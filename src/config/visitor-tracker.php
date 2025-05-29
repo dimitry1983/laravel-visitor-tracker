@@ -37,4 +37,14 @@ return [
     */
 
     'session_key' => 'visitor_tracked',
+
+
+    'track_is_bot' => true, // Zet op false als je is_bot niet wilt bijhouden
+
+    // Voeg hier de toegestane landen toe, bijvoorbeeld ['Netherlands', 'Belgium']
+    // Gebruik lege array [] om geen restrictie toe te passen
+    'allowed_countries' => [],
+
+
+
 ];

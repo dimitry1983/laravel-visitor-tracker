@@ -30,6 +30,17 @@ class VisitorTracker
         $gclid   = Request::query('gclid');
         $msclkid = Request::query('msclkid');
         $fbclid  = Request::query('fbclid');
+        $url = Request::fullUrl();
+
+
+        // Alleen bezoekers uit bepaalde landen toestaan
+        $allowedCountries = config('visitortracker.allowed_countries');
+        $country = $location?->countryName ?? 'Onbekend';
+
+        if (!empty($allowedCountries) && !in_array($country, $allowedCountries)) {
+            return; // Land niet toegestaan, stop hier.
+        }
+
 
         if ($gclid) {
             Session::put('gclid', $gclid);
@@ -44,13 +55,12 @@ class VisitorTracker
         }
 
 
-
-
         Visitor::create([
             'session_id'    => $sessionId,
             'ip_address'    => $ip,
             'user_agent'    => $userAgent,
             'is_bot'        => $bot,
+            'full_url'      => $url,
             'referrer'      => $referrer,
             'utm_source'    => $utmSource,
             'utm_medium'    => $utmMedium,
