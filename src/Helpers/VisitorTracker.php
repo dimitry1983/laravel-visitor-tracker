@@ -14,7 +14,7 @@ class VisitorTracker
 
         $bot = 0;
         $userAgent = request()->header('User-Agent');
-        if (Str::contains(strtolower($userAgent), ['bot', 'crawler', 'spider', 'monitor'])) {
+        if (preg_match('/bot|crawler|spider|monitor/i', $userAgent)) {
             $bot = 1;
         }
 
