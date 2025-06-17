@@ -16,6 +16,9 @@ class VisitorTracker
         $userAgent = request()->header('User-Agent');
         if (preg_match('/bot|crawler|spider|monitor/i', $userAgent)) {
             $bot = 1;
+            if(config('visitortracker.track_bots') == false){
+                return;
+            }
         }
 
         if (Session::has('visitor_tracked')) return;
