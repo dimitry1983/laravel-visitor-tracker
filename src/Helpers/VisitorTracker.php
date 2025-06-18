@@ -75,7 +75,7 @@ class VisitorTracker
             'fbclid'        => $fbclid,
         ]);
 
-        Session::put('visitor_id', $visitor);
+        Session::put('visitor_id', $visitor->id);
         Session::put('visitor_tracked', true);
     }
 }
