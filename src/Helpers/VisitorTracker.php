@@ -58,7 +58,7 @@ class VisitorTracker
         }
 
 
-        Visitor::create([
+        $visitor = Visitor::create([
             'session_id'    => $sessionId,
             'ip_address'    => $ip,
             'user_agent'    => $userAgent,
@@ -75,6 +75,7 @@ class VisitorTracker
             'fbclid'        => $fbclid,
         ]);
 
+        Session::put('visitor_id', $visitor);
         Session::put('visitor_tracked', true);
     }
 }
