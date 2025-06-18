@@ -76,6 +76,7 @@ class VisitorTracker
         ]);
 
         Session::put('visitor_id', $visitor->id);
+        Session::put('visitor_id_2', $visitor->id);
         Session::put('visitor_tracked', true);
     }
 }
